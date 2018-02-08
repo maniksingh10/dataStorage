@@ -26,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.pets.data.Contract;
 import com.example.android.pets.data.DbHelper;
@@ -36,7 +35,8 @@ import com.example.android.pets.data.DbHelper;
  */
 public class CatalogActivity extends AppCompatActivity {
 
-    private DbHelper mDbHelper ;
+    private DbHelper mDbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,19 +52,20 @@ public class CatalogActivity extends AppCompatActivity {
             }
         });
         mDbHelper = new DbHelper(this);
-         displayDatabaseInfo();
+        displayDatabaseInfo();
     }
+
     private void insert() {
 
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        ContentValues cv= new ContentValues();
+        ContentValues cv = new ContentValues();
         cv.put(Contract.Entry.CL_NAME, "Toto");
         cv.put(Contract.Entry.Cl_BREED, "Lab");
         cv.put(Contract.Entry.CL_GENDER, Contract.Entry.GEN_MALE);
         cv.put(Contract.Entry.CL_WEIGHT, 7);
 
-        db.insert(Contract.Entry.TABLE_NAME,null,cv);
+        db.insert(Contract.Entry.TABLE_NAME, null, cv);
 
     }
 
@@ -80,7 +81,7 @@ public class CatalogActivity extends AppCompatActivity {
                 Contract.Entry.CL_WEIGHT, Contract.Entry.CL_NAME,
                 Contract.Entry.CL_GENDER, Contract.Entry.Cl_BREED,
         };
-        Cursor curzor = db.query(Contract.Entry.TABLE_NAME,projection,null,null,null,null,null);
+        Cursor curzor = db.query(Contract.Entry.TABLE_NAME, projection, null, null, null, null, null);
         try {
 
             TextView displayView = (TextView) findViewById(R.id.text_view_pet);
@@ -93,7 +94,7 @@ public class CatalogActivity extends AppCompatActivity {
             // the information from each column in this order.
             displayView.setText("The pets table contains " + curzor.getCount() + " pets.\n\n");
             displayView.append(Contract.Entry._ID + " - " +
-                    Contract.Entry.CL_NAME +  " - " + Contract.Entry.Cl_BREED+" - "+ Contract.Entry.CL_GENDER +"\n" );
+                    Contract.Entry.CL_NAME + " - " + Contract.Entry.Cl_BREED + " - " + Contract.Entry.CL_GENDER + "\n");
 
             // Figure out the index of each column
             int idCLIndex = curzor.getColumnIndex(Contract.Entry._ID);
@@ -111,14 +112,14 @@ public class CatalogActivity extends AppCompatActivity {
                 int currentGen = curzor.getInt(genderCLIndx);
                 // Display the values from each column of the current row in the cursor in the TextView
                 displayView.append(("\n" + currentID + " - " +
-                        currentName+ " - " + currentBreed+ " - " + currentGen));
+                        currentName + " - " + currentBreed + " - " + currentGen));
             }
 
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
             curzor.close();
-    }
+        }
     }
 
 
@@ -149,7 +150,7 @@ public class CatalogActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart () {
+    protected void onStart() {
         super.onStart();
         displayDatabaseInfo();
     }

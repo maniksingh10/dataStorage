@@ -30,41 +30,28 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 import com.example.android.pets.data.Contract.Entry;
 import com.example.android.pets.data.DbHelper;
 
-import java.sql.Struct;
 
-/**
- * Allows user to create a new pet or edit an existing one.
- */
+// Allows user to create a new pet or edit an existing one.
 public class EditorActivity extends AppCompatActivity {
 
-    /**
-     * EditText field to enter the pet's name
-     */
+    //EditText field to enter the pet's name
     private EditText mNameEditText;
 
-    /**
-     * EditText field to enter the pet's breed
-     */
+    //EditText field to enter the pet's breed
     private EditText mBreedEditText;
 
-    /**
-     * EditText field to enter the pet's weight
-     */
+    //EditText field to enter the pet's weight
     private EditText mWeightEditText;
 
-    /**
-     * EditText field to enter the pet's gender
-     */
+    //EditText field to enter the pet's gender
     private Spinner mGenderSpinner;
 
-    /**
-     * Gender of the pet. The possible values are:
-     * 0 for unknown gender, 1 for male, 2 for female.
-     */
+
+    //Gender of the pet. The possible values are:
+    //0 for unknown gender, 1 for male, 2 for female.
     private int mGender = 0;
 
     @Override
@@ -81,9 +68,7 @@ public class EditorActivity extends AppCompatActivity {
         setupSpinner();
     }
 
-    /**
-     * Setup the dropdown spinner that allows the user to select the gender of the pet.
-     */
+    //Setup the dropdown spinner that allows the user to select the gender of the pet.
     private void setupSpinner() {
         // Create adapter for spinner. The list options are from the String array it will use
         // the spinner will use the default layout
