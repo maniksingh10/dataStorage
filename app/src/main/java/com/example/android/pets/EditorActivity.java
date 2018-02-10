@@ -147,7 +147,7 @@ public class EditorActivity extends AppCompatActivity {
         SQLiteDatabase db = mDbGelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(Entry.CL_NAME, name);
-        cv.put(Entry.Cl_BREED, breed);
+        cv.put(Entry.CL_BREED, breed);
         cv.put(Entry.CL_WEIGHT, weight);
         cv.put(Entry.CL_GENDER, mGender);
         long id = db.insert(Entry.TABLE_NAME, null, cv);
