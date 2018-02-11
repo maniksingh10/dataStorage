@@ -19,7 +19,7 @@ package com.example.android.pets;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -30,14 +30,12 @@ import android.widget.TextView;
 
 import com.example.android.pets.data.Contract;
 import com.example.android.pets.data.Contract.Entry;
-import com.example.android.pets.data.DbHelper;
 
 /**
  * Displays list of pets that were entered and stored in the app.
  */
 public class CatalogActivity extends AppCompatActivity {
 
-    private DbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,21 +51,17 @@ public class CatalogActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        mDbHelper = new DbHelper(this);
         displayDatabaseInfo();
     }
 
     private void insert() {
-
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         ContentValues cv = new ContentValues();
         cv.put(Contract.Entry.CL_NAME, "Toto");
         cv.put(Contract.Entry.CL_BREED, "Lab");
-        cv.put(Contract.Entry.CL_GENDER, Contract.Entry.GEN_MALE);
+        cv.put(Contract.Entry.CL_GENDER, Entry.GEN_MALE);
         cv.put(Contract.Entry.CL_WEIGHT, 7);
 
-        db.insert(Contract.Entry.TABLE_NAME, null, cv);
+        Uri newUri = getContentResolver().insert(Entry.CONTENT_URI, cv);
     }
 
     private void displayDatabaseInfo() {
@@ -137,10 +131,14 @@ public class CatalogActivity extends AppCompatActivity {
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
+                delete();
                 // Do nothing for now
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void delete() {
     }
 
     @Override

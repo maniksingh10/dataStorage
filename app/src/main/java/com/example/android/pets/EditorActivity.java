@@ -16,7 +16,7 @@
 package com.example.android.pets;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +31,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.pets.data.Contract.Entry;
-import com.example.android.pets.data.DbHelper;
 
 
 // Allows user to create a new pet or edit an existing one.
@@ -140,17 +139,19 @@ public class EditorActivity extends AppCompatActivity {
     private void savePet() {
         String name = mNameEditText.getText().toString().trim();
         String breed = mBreedEditText.getText().toString().trim();
-        String wS = mWeightEditText.getText().toString();
-        int weight = Integer.parseInt(wS);
-
-        DbHelper mDbGelper = new DbHelper(this);
-        SQLiteDatabase db = mDbGelper.getWritableDatabase();
+        String wS = mWeightEditText.getText().toString().trim();
+        int weight;
+        try {
+            weight = Integer.parseInt(wS);
+        } catch (NumberFormatException e) {
+            weight = 0;
+        }
         ContentValues cv = new ContentValues();
         cv.put(Entry.CL_NAME, name);
         cv.put(Entry.CL_BREED, breed);
         cv.put(Entry.CL_WEIGHT, weight);
         cv.put(Entry.CL_GENDER, mGender);
-        long id = db.insert(Entry.TABLE_NAME, null, cv);
-        Toast.makeText(this, "Row ID is " + id, Toast.LENGTH_SHORT).show();
+        Uri newUri = getContentResolver().insert(Entry.CONTENT_URI, cv);
+        Toast.makeText(this, "New Pet Added", Toast.LENGTH_SHORT).show();
     }
 }
